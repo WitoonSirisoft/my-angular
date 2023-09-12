@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+        
         stage('Checkout SCM') {
             steps {
                 checkout scm
@@ -9,12 +10,19 @@ pipeline {
         }
 
         stage('Build Angular Project') {
-            steps {
-                nodejs(nodeJSInstallationName: 'NodeJS') {
-                    sh 'npm install'
-                    sh 'npm run build' // Replace with your build command
+            agent {
+                 docker {
+                        image "node:14.20.0-alpine"
+                        args '-u root'
                 }
             }
+            
+            steps {
+                sh 'npm install -g @angular/cli'
+                sh 'npm install'
+                sh 'npm run build'
+            }
+
         }
 
         stage('Docker Build and Publish') {
