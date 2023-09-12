@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'npm install -g @angular/cli'
                 sh 'npm install'
-                sh 'npm run build'
+                sh 'npm run build --prod'
             }
 
         }
@@ -30,7 +30,7 @@ pipeline {
                 // Build Docker image
                 script {
                     def customImageName = "witoon-angular-app:${BUILD_NUMBER}"
-                    def dockerImage = docker.build(customImageName, '.')
+                    def dockerImage = docker.build(customImageName, "-f Dockerfile .")
                 }
 
                 // script {
