@@ -8,11 +8,11 @@ pipeline {
         //         checkout scm
         //     }
         // }
-        stage('Clear dir') {
-            steps {
-                deleteDir()
-            }
-        }
+        // stage('Clear dir') {
+        //     steps {
+        //         deleteDir()
+        //     }
+        // }
 
         stage('Build Angular Project') {
             agent {
