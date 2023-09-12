@@ -3,11 +3,11 @@ pipeline {
 
     stages {
         
-        stage('Checkout SCM') {
-            steps {
-                checkout scm
-            }
-        }
+        // stage('Checkout SCM') {
+        //     steps {
+        //         checkout scm
+        //     }
+        // }
 
         stage('Build Angular Project') {
             agent {
