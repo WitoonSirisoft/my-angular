@@ -33,9 +33,18 @@ pipeline {
                     def dockerImage = docker.build(customImageName, '.')
                 }
 
+                // script {
+                //     docker.withRegistry("https://" + "${env.registry_proxy}", "${env.nexus_credential}") {
+                //         a = docker.build("${env.registryForDeploy}" + "/" + "${env.imageName}" + ":"+"${version_tag}", "-f Dockerfile .")
+                //     }
+                //     docker.withRegistry("https://" + "${env.registryForDeploy}", "${env.nexus_credential}") {
+                //         a.push()
+                //     }
+                // }
+
                 // Push Docker image to a Docker registry (optional)
                 script {
-                    def dockerRegistryURL = "witoonruamngoen/angular:${BUILD_NUMBER}"
+                    def dockerRegistryURL = "https://registry.hub.docker.com"
                     docker.withRegistry(dockerRegistryURL, '') {
                         dockerImage.push()
                     }
