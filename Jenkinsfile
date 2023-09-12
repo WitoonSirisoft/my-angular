@@ -3,16 +3,27 @@ pipeline {
 
     stages {
         
-        // stage('Checkout SCM') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+                
+            }
+            post {
+
+                always {
+
+                 cleanWs()
+
+                }
+
+            }
+        }
         // stage('Clear dir') {
         //     steps {
         //         deleteDir()
         //     }
         // }
+
 
         stage('Build Angular Project') {
             agent {
