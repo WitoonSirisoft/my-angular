@@ -30,6 +30,13 @@ pipeline {
 
         }
 
+        stage('Log') {
+            steps {
+                sh 'pwd'
+                sh 'ls'
+            }
+        }
+
         stage('Docker Build and Publish') {
             steps {
                 // Build Docker image
