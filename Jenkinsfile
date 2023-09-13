@@ -82,7 +82,7 @@ pipeline {
         stage('Set up gcloud') {
             agent {
                  docker {
-                        image "google/cloud-sdk"
+                        image "google/cloud-sdk:alpine"
                 }
             }
             
@@ -96,9 +96,9 @@ pipeline {
                         '''
                     }
                     // sh ('gcloud auth activate-service-account --key-file=$GCLOUD_CREDS')
-                    sh 'gcloud beta services replace service.yaml --platform='managed' --region='us-central1''
+                    sh 'gcloud run services replace service.yaml --platform='managed' --region='us-central1''
                     sh '''
-                        gcloud beta services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
+                        gcloud run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
                     '''
                 }
             }
