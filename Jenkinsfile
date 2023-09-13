@@ -53,7 +53,7 @@ pipeline {
                     script {
                         
                         // Build Docker image
-                        def customImageName = "witoonruamngoen/angular/witoon-angular-app:${BUILD_NUMBER}"
+                        def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
                         // Push Docker image to a Docker registry (optional)
