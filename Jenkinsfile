@@ -55,16 +55,12 @@ pipeline {
                         // Build Docker image
                         def customImageName = "witoonruamngoen/angular/witoon-angular-app:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
-                        withCredentials([usernamePassword(credentialsId: 'credentialsId', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
-                                  dockerImage.push()
-                        }       
 
-                      
                         // Push Docker image to a Docker registry (optional)
                         // def dockerRegistryURL = "https://hub.docker.com/r/witoonruamngoen/angular"
-                        // docker.withRegistry(dockerRegistryURL, '') {
-                        //     dockerImage.push()
-                        // }
+                        docker.withRegistry('', 'credentialsId') {
+                            dockerImage.push()
+                        }
                     }
                 }
             }
