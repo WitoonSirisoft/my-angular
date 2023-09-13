@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: docker.io/witoonruamngoen/angular
+        - image: /witoonruamngoen/angular
           ports:
             - name: http1
               containerPort: 80
