@@ -39,6 +39,9 @@ pipeline {
                 sh 'pwd'
                 sh 'ls'
                 echo "${WORKSPACE}"
+                dir("${WORKSPACE}@2") {
+                    echo "${WORKSPACE}"
+                }
             }
         }
 
