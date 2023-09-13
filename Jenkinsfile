@@ -51,12 +51,13 @@ pipeline {
             steps {
                 dir("${WORKSPACE}@2") {
                     script {
+                        
                         // Build Docker image
-                        def customImageName = "witoon-angular-app:${BUILD_NUMBER}"
+                        def customImageName = "witoonruamngoen/angular/witoon-angular-app:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
                         // Push Docker image to a Docker registry (optional)
-                        def dockerRegistryURL = "/witoonruamngoen/angular"
+                        def dockerRegistryURL = "https://hub.docker.com/r/witoonruamngoen/angular"
                         docker.withRegistry(dockerRegistryURL, 'credentialsId') {
                             dockerImage.push()
                         }
