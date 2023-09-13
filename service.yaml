@@ -1,0 +1,13 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: Witoon-Angular
+spec:
+  template:
+    spec:
+      containers:
+        - image: us-docker.pkg.dev/cloudrun/container/hello
+          ports:
+            - name: http1
+              containerPort: 80
+              
