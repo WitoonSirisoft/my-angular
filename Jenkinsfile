@@ -65,5 +65,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Cleanup') {
+            steps {
+                script {
+                    sh "docker rmi witoonruamngoen/angular:${BUILD_NUMBER}" 
+                }      
+            }
+        }
+
     }
 }
