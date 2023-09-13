@@ -50,25 +50,17 @@ pipeline {
         stage('Docker Build and Publish') {
             steps {
                 // Build Docker image
-                script {
-                    def customImageName = "witoon-angular-app:${BUILD_NUMBER}"
-                    def dockerImage = docker.build(customImageName, "-f Dockerfile .")
-                }
-
-                // script {
-                //     docker.withRegistry("https://" + "${env.registry_proxy}", "${env.nexus_credential}") {
-                //         a = docker.build("${env.registryForDeploy}" + "/" + "${env.imageName}" + ":"+"${version_tag}", "-f Dockerfile .")
-                //     }
-                //     docker.withRegistry("https://" + "${env.registryForDeploy}", "${env.nexus_credential}") {
-                //         a.push()
-                //     }
-                // }
-
+                dir("${WORKSPACE}@2") {
+                    script {
+                        def customImageName = "witoon-angular-app:${BUILD_NUMBER}"
+                        def dockerImage = docker.build(customImageName, "-f Dockerfile .")
+                    }
                 // Push Docker image to a Docker registry (optional)
-                script {
-                    def dockerRegistryURL = "https://registry.hub.docker.com"
-                    docker.withRegistry(dockerRegistryURL, '') {
-                        dockerImage.push()
+                    script {
+                        def dockerRegistryURL = "https://registry.hub.docker.com"
+                        docker.withRegistry(dockerRegistryURL, '') {
+                            dockerImage.push()
+                        }
                     }
                 }
             }
