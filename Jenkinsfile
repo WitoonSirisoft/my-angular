@@ -4,7 +4,7 @@ pipeline {
     environment {
         CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
         CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
-        GCLOUD_CREDS=credentials('gcloud-creds')
+        GCLOUD_CREDS='gcloud-creds'
     }
 
     stages {
