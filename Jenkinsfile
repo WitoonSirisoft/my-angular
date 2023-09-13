@@ -49,14 +49,13 @@ pipeline {
 
         stage('Docker Build and Publish') {
             steps {
-                // Build Docker image
                 dir("${WORKSPACE}@2") {
                     script {
+                        // Build Docker image
                         def customImageName = "witoon-angular-app:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
-                    }
-                // Push Docker image to a Docker registry (optional)
-                    script {
+
+                        // Push Docker image to a Docker registry (optional)
                         def dockerRegistryURL = "https://registry.hub.docker.com"
                         docker.withRegistry(dockerRegistryURL, '') {
                             dockerImage.push()
