@@ -26,7 +26,7 @@ pipeline {
             
             steps {
                 script {
-                    def customDistPath = "${WORKSPACE}/dist"
+                    def customDistPath = "${WORKSPACE}"
                     sh 'npm install -g @angular/cli'
                     sh 'npm install'
                     sh 'npm run build --prod'
