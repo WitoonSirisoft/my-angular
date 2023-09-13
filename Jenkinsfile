@@ -1,14 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
+        CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
+        GCLOUD_CREDS=credentials('gcloud-creds')
+    }
+    
     stages {
-
-        environment {
-            CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
-            CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
-            GCLOUD_CREDS=credentials('gcloud-creds')
-        }
-        
         // stage('Checkout SCM') {
         //     steps {
         //         checkout scm
