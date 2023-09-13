@@ -38,6 +38,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls'
+                echo "${WORKSPACE}"
             }
         }
 
