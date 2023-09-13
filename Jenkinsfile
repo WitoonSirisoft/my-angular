@@ -4,7 +4,7 @@ pipeline {
     environment {
         CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
         CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
-        GCLOUD_CREDS='gcloud-creds'
+        GCLOUD_CREDS=credentials('gcloud-creds')
     }
 
     stages {
@@ -89,12 +89,7 @@ pipeline {
             steps {
                 script {
                     sh 'gcloud version'
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'gcloud-creds')]) {
-                        sh "gcloud auth activate-service-account --key-file=${gcloud-creds}"
-                    }
-                    // sh '''
-                    //     gcloud auth activate-service-account --key-file="gcloud-creds"
-                    // '''
+                    sh "gcloud auth activate-service-account --key-file=${GCLOUD_CREDS}"
                     sh 'gcloud run services replace service.yaml --platform='managed' --region='us-central1''
                     sh '''
                         gcloud run services add-iam-policy-binding hello --region='us-central1' --member='allUsers' --role='roles/run.invoker'
