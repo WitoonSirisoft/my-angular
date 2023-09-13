@@ -3,12 +3,12 @@ pipeline {
 
     stages {
         
-        stage('Checkout SCM') {
-            steps {
-                checkout scm
+        // stage('Checkout SCM') {
+        //     steps {
+        //         checkout scm
                 
-            }
-        }
+        //     }
+        // }
         // stage('Clear dir') {
         //     steps {
         //         deleteDir()
