@@ -8,15 +8,6 @@ pipeline {
                 checkout scm
                 
             }
-            post {
-
-                always {
-
-                 cleanWs()
-
-                }
-
-            }
         }
         // stage('Clear dir') {
         //     steps {
