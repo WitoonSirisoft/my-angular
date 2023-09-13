@@ -90,7 +90,7 @@ pipeline {
                 script {
                     sh 'gcloud version'
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'gcloud-creds')]) {
-                        sh("gcloud auth activate-service-account --key-file=${gcloud-creds}")
+                        sh "gcloud auth activate-service-account --key-file=${gcloud-creds}"
                     }
                     // sh '''
                     //     gcloud auth activate-service-account --key-file="gcloud-creds"
