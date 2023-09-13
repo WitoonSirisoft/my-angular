@@ -74,5 +74,21 @@ pipeline {
             }
         }
 
+        stage('Set up gcloud') {
+            agent {
+                 docker {
+                        image "google/cloud-sdk"
+                }
+            }
+            
+            steps {
+                script {
+                    sh 'gcloud version'
+                }
+            }
+
+        }
+        
+
     }
 }
