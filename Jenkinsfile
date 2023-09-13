@@ -78,13 +78,33 @@ pipeline {
             }
         }
 
-        // stage('Pull docker image and push to gcr') {
-        //     steps {
-        //         script {
+         stage('Auth') {
+            agent {
+                 docker {
+                        image "google/cloud-sdk:alpine"
+                }
+            }
+            steps {
+                script {
+                    sh 'gcloud version'
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+                        sh '''
+                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+                        '''
+                    }
+                }
+            }
+        }
 
-        //         }      
-        //     }
-        // }
+        stage('Pull docker image and push to gcr') {
+            steps {
+                script {
+                    sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
+                    sh "docker push gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
+                }      
+            }
+        }
 
         stage('Set up gcloud') {
             agent {
@@ -96,15 +116,12 @@ pipeline {
             steps {
                 script {
 
-                    sh 'gcloud version'
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
-                        sh "gcloud docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                        sh "gcloud docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
-                        sh "gcloud docker push gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
-                        sh '''
-                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
-                        '''
-                    }
+                    // sh 'gcloud version'
+                    // withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+                    //     sh '''
+                    //         gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+                    //     '''
+                    // }
                     sh '''
                         gcloud run services replace service.yaml --platform="managed" --region="us-central1"
                     '''
