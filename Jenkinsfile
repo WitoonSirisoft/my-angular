@@ -56,8 +56,8 @@ pipeline {
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
                         // Push Docker image to a Docker registry (optional)
-                        def dockerRegistryURL = "https://registry-1.docker.io/r/witoonruamngoen/angular"
-                        docker.withRegistry(dockerRegistryURL, '') {
+                        def dockerRegistryURL = "https://hub.docker.com"
+                        docker.withRegistry(dockerRegistryURL, '/r/witoonruamngoen/angular') {
                             dockerImage.push()
                         }
                     }
