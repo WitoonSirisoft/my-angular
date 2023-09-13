@@ -61,11 +61,13 @@ pipeline {
                         def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
-                        // Push Docker image to a Docker registry (optional)
-                        // def dockerRegistryURL = "https://hub.docker.com/r/witoonruamngoen/angular"
-                        docker.withRegistry('', 'credentialsId') {
+
+                        docker.withRegistry("gcr.io/valid-unfolding-398711/angular:${BUILD_NUMBER}", 'credentialsId') {
                             dockerImage.push()
                         }
+
+                        // sh "docker build -t gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER} ."
+                        // sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER} ."
                     }
                 }
             }
@@ -95,7 +97,6 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
                         '''
                     }
-                    // sh ('gcloud auth activate-service-account --key-file=$GCLOUD_CREDS')
                     sh '''
                         gcloud run services replace service.yaml --platform="managed" --region="us-central1"
                     '''
