@@ -61,13 +61,10 @@ pipeline {
                         def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
-
-                        docker.withRegistry("gcr.io/valid-unfolding-398711/angular:${BUILD_NUMBER}", 'credentialsId') {
+                        // Push Docker image to a Docker registry (optional)
+                        docker.withRegistry('', 'credentialsId') {
                             dockerImage.push()
                         }
-
-                        // sh "docker build -t gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER} ."
-                        // sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER} ."
                     }
                 }
             }
@@ -77,6 +74,16 @@ pipeline {
             steps {
                 script {
                     sh "docker rmi witoonruamngoen/angular:${BUILD_NUMBER}" 
+                }      
+            }
+        }
+
+        stage('Pull docker image and push to gcr') {
+            steps {
+                script {
+                    sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
+                    sh "docker push gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
                 }      
             }
         }
