@@ -56,11 +56,12 @@ pipeline {
                         def customImageName = "witoonruamngoen/angular/witoon-angular-app:${BUILD_NUMBER}"
                         def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
+                        dockerImage.push()
                         // Push Docker image to a Docker registry (optional)
-                        def dockerRegistryURL = "https://hub.docker.com/r/witoonruamngoen/angular"
-                        docker.withRegistry(dockerRegistryURL, 'credentialsId') {
-                            dockerImage.push()
-                        }
+                        // def dockerRegistryURL = "https://hub.docker.com/r/witoonruamngoen/angular"
+                        // docker.withRegistry(dockerRegistryURL, '') {
+                        //     dockerImage.push()
+                        // }
                     }
                 }
             }
