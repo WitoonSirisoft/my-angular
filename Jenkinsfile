@@ -38,8 +38,8 @@ pipeline {
             steps {
                 script {
                     sh 'npm install -g firebase-tools'
-                    // sh 'firebase login --interactive'
-                    // sh 'firebase init hosting'
+                    sh 'firebase login --interactive'
+                    sh 'firebase init hosting'
                     sh 'firebase deploy'
                 }
             }
