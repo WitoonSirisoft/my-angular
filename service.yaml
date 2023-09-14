@@ -9,5 +9,5 @@ spec:
         - image: us-docker.pkg.dev/cloudrun/container/hello
           ports:
             - name: http1
-              containerPort: 8080
+              containerPort: 80
               
