@@ -81,7 +81,7 @@ pipeline {
                         '''
                         sh "gcloud auth configure-docker us-central1-docker.pkg.dev"
                         sh "gcloud auth list"
-                        sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
+                        // sh "gcloud docker -- pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     }
                 }
             }
@@ -91,8 +91,8 @@ pipeline {
             steps {
                 script {
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
-                    sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} ugcr.io/valid-unfolding-398711/gcloud-repo "
+                    sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo "
                 }      
             }
         }
