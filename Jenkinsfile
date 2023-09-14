@@ -92,10 +92,7 @@ pipeline {
         //                     gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
         //                 '''
         //                 sh "gcloud auth configure-docker"
-        //                 sh '''
-        //                     gcloud artifacts repositories add-iam-policy-binding us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo --location='all' --member='allUsers' --role='Artifact Registry Administrator'
-        //                 '''
-        //                 sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
+        //                 sh "gcloud docker -- pull witoonruamngoen/angular:${BUILD_NUMBER}"
         //             }
         //         }
         //     }
@@ -106,8 +103,8 @@ pipeline {
                 script {
                     
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo:${BUILD_NUMBER}"
-                    sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo:${BUILD_NUMBER}"
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                    sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
                 }      
             }
         }
@@ -121,13 +118,12 @@ pipeline {
             
             steps {
                 script {
-
-                    // sh 'gcloud version'
-                    // withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
-                    //     sh '''
-                    //         gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
-                    //     '''
-                    // }
+                    sh 'gcloud version'
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+                        sh '''
+                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+                        '''
+                    }
                     sh '''
                         gcloud run services replace service.yaml --platform="managed" --region="us-central1"
                     '''
