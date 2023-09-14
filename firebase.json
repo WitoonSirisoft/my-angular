@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/angular-jenkins",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
