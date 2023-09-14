@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: us-docker.pkg.dev/witoonruamngoen/angular
+        - image: us-docker.pkg.dev/cloudrun/container/hello
           ports:
             - name: http1
               containerPort: 80

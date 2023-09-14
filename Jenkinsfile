@@ -66,35 +66,35 @@ pipeline {
             }
         }
 
-        stage('Auth') {
-            agent {
-                 docker {
-                        image "google/cloud-sdk:alpine"
-                }
-            }
-            steps {
-                script {
-                    sh 'gcloud version'
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
-                        sh '''
-                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
-                        '''
-                        sh "gcloud auth configure-docker us-central1-docker.pkg.dev"
-                        sh "gcloud auth list"
-                    }
-                }
-            }
-        }
+        // stage('Auth') {
+        //     agent {
+        //          docker {
+        //                 image "google/cloud-sdk:alpine"
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             sh 'gcloud version'
+        //             withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+        //                 sh '''
+        //                     gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+        //                 '''
+        //                 sh "gcloud auth configure-docker us-central1-docker.pkg.dev"
+        //                 sh "gcloud auth list"
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Pull docker image and push to gcr') {
-            steps {
-                script {
-                    sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/gcloud-repo "
-                    sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo "
-                }      
-            }
-        }
+        // stage('Pull docker image and push to gcr') {
+        //     steps {
+        //         script {
+        //             sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
+        //             sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/gcloud-repo "
+        //             sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo "
+        //         }      
+        //     }
+        // }
 
         stage('Set up gcloud') {
             agent {
