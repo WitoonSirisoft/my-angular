@@ -78,7 +78,7 @@ pipeline {
             }
         }
 
-         stage('Auth') {
+        stage('Auth') {
             agent {
                  docker {
                         image "google/cloud-sdk:alpine"
@@ -91,7 +91,8 @@ pipeline {
                         sh '''
                             gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
                         '''
-                        sh "gcloud auth configure-docker gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
+                        sh "gcloud auth configure-docker"
+                        sh "gcloud docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     }
                 }
             }
