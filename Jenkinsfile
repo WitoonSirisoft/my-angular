@@ -78,25 +78,28 @@ pipeline {
             }
         }
 
-        // stage('Auth') {
-        //     agent {
-        //          docker {
-        //                 image "google/cloud-sdk:alpine"
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             sh 'gcloud version'
-        //             withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
-        //                 sh '''
-        //                     gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
-        //                 '''
-        //                 sh "gcloud auth configure-docker"
-        //                 sh "gcloud docker -- pull witoonruamngoen/angular:${BUILD_NUMBER}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Auth') {
+            agent {
+                 docker {
+                        image "google/cloud-sdk:alpine"
+                }
+            }
+            steps {
+                script {
+                    sh 'gcloud version'
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+                        sh '''
+                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+                        '''
+                        sh "gcloud auth configure-docker"
+                        sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
+                        sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                        sh "docker-credential-gcr configure-docker --token-source='gcloud'"
+                        sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                    }
+                }
+            }
+        }
 
         stage('Pull docker image and push to gcr') {
             steps {
@@ -104,6 +107,7 @@ pipeline {
                     
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                    sh "docker-credential-gcr configure-docker --token-source='gcloud'"
                     sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
                 }      
             }
