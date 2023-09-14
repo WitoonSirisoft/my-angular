@@ -5,6 +5,7 @@ pipeline {
         CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
         CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
         GCLOUD_CREDS=credentials('gcloud-creds')
+        IMAGE_NAME = 'gcr.io/valid-unfolding-398711/gcloud-repo'
     }
 
     stages {
@@ -44,15 +45,16 @@ pipeline {
             steps {
                 dir("${WORKSPACE}@2") {
                     script {
-                        
-                        // Build Docker image
-                        def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
-                        def dockerImage = docker.build(customImageName, "-f Dockerfile .")
+                        sh "docker build --tag=${IMAGE_NAME} . --file=docker/Dockerfile"
+                        sh "docker push ${IMAGE_NAME}"
+                        // // Build Docker image
+                        // def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
+                        // def dockerImage = docker.build(customImageName, "-f Dockerfile .")
 
-                        // Push Docker image to a Docker registry (optional)
-                        docker.withRegistry('', 'credentialsId') {
-                            dockerImage.push()
-                        }
+                        // // Push Docker image to a Docker registry (optional)
+                        // docker.withRegistry('', 'credentialsId') {
+                        //     dockerImage.push()
+                        // }
                     }
                 }
             }
@@ -91,7 +93,7 @@ pipeline {
         //         script {
         //             sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
         //             sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/gcloud-repo "
-        //             sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo "
+        //             sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo"
         //         }      
         //     }
         // }
