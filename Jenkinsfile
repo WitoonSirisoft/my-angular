@@ -92,7 +92,7 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
                         '''
                         sh "gcloud auth configure-docker"
-                        sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
+                        // sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     }
                 }
             }
@@ -103,8 +103,8 @@ pipeline {
                 script {
                     
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker push gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo:${BUILD_NUMBER}"
+                    sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo:${BUILD_NUMBER}"
                 }      
             }
         }
