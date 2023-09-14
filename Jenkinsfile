@@ -90,7 +90,7 @@ pipeline {
             steps {
                 script {
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} ugcr.io/valid-unfolding-398711/gcloud-repo "
+                    sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} gcr.io/valid-unfolding-398711/gcloud-repo "
                     sh "docker push gcr.io/valid-unfolding-398711/gcloud-repo "
                 }      
             }
