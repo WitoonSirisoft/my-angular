@@ -78,28 +78,28 @@ pipeline {
             }
         }
 
-        stage('Auth') {
-            agent {
-                 docker {
-                        image "google/cloud-sdk:alpine"
-                }
-            }
-            steps {
-                script {
-                    sh 'gcloud version'
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
-                        sh '''
-                            gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
-                        '''
-                        sh "gcloud auth configure-docker"
-                        sh '''
-                            gcloud artifacts repositories add-iam-policy-binding us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo --location='all' --member='allUsers' --role='Artifact Registry Administrator'
-                        '''
-                        // sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                    }
-                }
-            }
-        }
+        // stage('Auth') {
+        //     agent {
+        //          docker {
+        //                 image "google/cloud-sdk:alpine"
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             sh 'gcloud version'
+        //             withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCLOUD_CREDS')]) {
+        //                 sh '''
+        //                     gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
+        //                 '''
+        //                 sh "gcloud auth configure-docker"
+        //                 sh '''
+        //                     gcloud artifacts repositories add-iam-policy-binding us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo --location='all' --member='allUsers' --role='Artifact Registry Administrator'
+        //                 '''
+        //                 sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Pull docker image and push to gcr') {
             steps {
