@@ -81,8 +81,8 @@ pipeline {
                         '''
                         sh "gcloud auth configure-docker us-central1-docker.pkg.dev"
                         sh "gcloud auth list"
+                        sh "gcloud docker -- push"
                     }
-                    sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
                 }
             }
         }
