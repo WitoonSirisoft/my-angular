@@ -45,7 +45,7 @@ pipeline {
             steps {
                 dir("${WORKSPACE}@2") {
                     script {
-                        sh "docker build --tag=${IMAGE_NAME} . --file=docker/Dockerfile"
+                        sh "docker build --tag=${IMAGE_NAME} -f Dockerfile ."
                         sh "docker push ${IMAGE_NAME}"
                         // // Build Docker image
                         // def customImageName = "witoonruamngoen/angular:${BUILD_NUMBER}"
