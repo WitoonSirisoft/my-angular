@@ -38,9 +38,9 @@ pipeline {
             steps {
                 script {
                     sh 'npm install -g firebase-tools'
-                    // sh 'firebase login:ci --interactive'
+                    sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
-                    sh 'firebase deploy --token 1/0goRj2pGvzB6JCgYIARAAGBASNwF-L9IrxVE8_kNXLvaxm1j_Yu9hkFRA4ZVlcCUn1h1RM_XhzpzDY93mRFKQimSqxmPCluyldfE'
+                    sh 'firebase deploy --token'
                 }
             }
 
