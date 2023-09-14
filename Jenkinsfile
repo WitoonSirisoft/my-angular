@@ -91,7 +91,7 @@ pipeline {
                         sh '''
                             gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
                         '''
-                        sh "gcloud auth configure-docker"
+                        sh "gcloud auth configure-docker gcr.io/valid-unfolding-398711/witoonruamngoen/angular:${BUILD_NUMBER}"
                     }
                 }
             }
