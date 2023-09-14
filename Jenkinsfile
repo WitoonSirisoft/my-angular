@@ -8,18 +8,6 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout SCM') {
-        //     steps {
-        //         checkout scm
-                
-        //     }
-        // }
-        // stage('Clear dir') {
-        //     steps {
-        //         deleteDir()
-        //     }
-        // }
-
 
         stage('Build Angular Project') {
             agent {
@@ -92,10 +80,7 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCLOUD_CREDS"
                         '''
                         sh "gcloud auth configure-docker"
-                        sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
-                        sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
-                        sh "docker-credential-gcr configure-docker --token-source='gcloud'"
-                        sh "docker push us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
+                        sh "gcloud auth list"
                     }
                 }
             }
@@ -104,7 +89,6 @@ pipeline {
         stage('Pull docker image and push to gcr') {
             steps {
                 script {
-                    
                     sh "docker pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     sh "docker tag witoonruamngoen/angular:${BUILD_NUMBER} us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo"
                     sh "docker-credential-gcr configure-docker --token-source='gcloud'"
