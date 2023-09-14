@@ -93,7 +93,7 @@ pipeline {
                         '''
                         sh "gcloud auth configure-docker"
                         sh '''
-                            gcloud artifacts repositories add-iam-policy-binding us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo --location=all --member=allUsers --role=Artifact Registry Administrator
+                            gcloud artifacts repositories add-iam-policy-binding us-central1-docker.pkg.dev/valid-unfolding-398711/gcloud-repo --location='all' --member='allUsers' --role='Artifact Registry Administrator'
                         '''
                         // sh "gcloud docker --pull witoonruamngoen/angular:${BUILD_NUMBER}"
                     }
