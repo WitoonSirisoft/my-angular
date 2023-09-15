@@ -1,0 +1,3 @@
+steps:
+  - name: gcr.io/witoonangular/firebase
+    args: ['deploy', '--project=witoonangular', '--only=hosting']
