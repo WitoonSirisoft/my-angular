@@ -60,7 +60,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-                        sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        withEnv(['GCLOUD_PATH=/var/jenkins_home/google-cloud-sdk/bin']) {
+                            sh '$GCLOUD_PATH/gcloud --version'
+                            sh '$GCLOUD_PATH/gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        }
+                        
                         sh 'firebase deploy'
                     }
                 }
