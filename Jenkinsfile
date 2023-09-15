@@ -28,49 +28,49 @@ pipeline {
 
         }
 
-        // stage('Initialize firebase') {
-        //     agent {
-        //          docker {
-        //                 image "node"
-        //                 args '-u root'
-        //         }
-        //     }
-            
-        //     steps {
-        //         script {
-        //             sh 'npm install -g firebase-tools'
-        //             // sh 'firebase login:ci --interactive'
-        //             // sh 'firebase init hosting'
-        //             // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-        //             //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
-        //             //     sh 'firebase deploy'
-        //             // }
-                    
-        //         }
-        //     }
-
-        // }
-
-        stage('Auth and Deploy') {
+        stage('Initialize firebase') {
             agent {
                  docker {
-                        image "google/cloud-sdk:alpine"
+                        image "node"
+                        args '-u root'
                 }
             }
+            
             steps {
                 script {
-
-                    withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-                        sh 'gcloud --version'
-                        sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
-                        sh 'gcloud config set project witoonangular'
-                        sh 'gcloud firebase'
-                        
-                        // sh 'firebase deploy'
-                    }
+                    sh 'npm install -g firebase-tools'
+                    // sh 'firebase login:ci --interactive'
+                    // sh 'firebase init hosting'
+                    // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+                    //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        sh 'firebase deploy --token 1//0gTNArw6gM9c7CgYIARAAGBASNwF-L9IrtCMTeKulXU9XQbHDwhpNDQOjatAb9tcJ7I6Hw7DTgNXXj5RA4aS0TbFhrRxRv3FSdZc'
+                    // }
+                    
                 }
             }
+
         }
+
+        // stage('Auth and Deploy') {
+        //     agent {
+        //          docker {
+        //                 image "google/cloud-sdk:alpine"
+        //         }
+        //     }
+        //     steps {
+        //         script {
+
+        //             withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+        //                 sh 'gcloud --version'
+        //                 sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+        //                 sh 'gcloud config set project witoonangular'
+        //                 sh 'gcloud firebase'
+                        
+        //                 // sh 'firebase deploy'
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Log') {
         //     steps {
