@@ -42,7 +42,8 @@ pipeline {
                     // sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
                     withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-                        sh 'firebase deploy --token $FIREBASE_CREDS'
+                        sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        sh 'firebase deploy'
                     }
                     
                 }
