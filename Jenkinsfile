@@ -64,7 +64,7 @@ pipeline {
                         sh 'gcloud --version'
                         sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
                         sh 'gcloud config set project witoonangular'
-                        sh 'gcloud builds submit --region=asia-southeast1 --config cloudbuild.yaml dist/angular-jenkins'
+                        sh 'gcloud builds submit --region=us-east1 --config cloudbuild.yaml dist/angular-jenkins'
                         
                         // sh 'firebase deploy'
                     }
