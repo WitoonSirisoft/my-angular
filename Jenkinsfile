@@ -64,7 +64,7 @@ pipeline {
                         sh 'gcloud --version'
                         sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
                         sh 'gcloud config set project witoonangular'
-                        sh 'gcloud builds submit'
+                        sh 'gcloud firebase'
                         
                         // sh 'firebase deploy'
                     }
