@@ -51,6 +51,22 @@ pipeline {
 
         }
 
+        stage('Auth and Deploy') {
+            agent {
+                 docker {
+                        image "google/cloud-sdk:alpine"
+                }
+            }
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+                        sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        sh 'firebase deploy'
+                    }
+                }
+            }
+        }
+
         // stage('Log') {
         //     steps {
         //         sh 'pwd'
