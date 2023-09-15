@@ -41,10 +41,10 @@ pipeline {
                     sh 'npm install -g firebase-tools'
                     // sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
-                    withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-                        sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
-                        sh 'firebase deploy'
-                    }
+                    // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+                    //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                    //     sh 'firebase deploy'
+                    // }
                     
                 }
             }
@@ -59,6 +59,7 @@ pipeline {
             }
             steps {
                 script {
+
                     withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
                         withEnv(['GCLOUD_PATH=/var/jenkins_home/google-cloud-sdk/bin']) {
                             sh '$GCLOUD_PATH/gcloud --version'
