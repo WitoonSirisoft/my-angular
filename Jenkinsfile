@@ -1,11 +1,12 @@
 pipeline {
     agent any
 
-    // environment {
-    //     CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
-    //     CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
-    //     GCLOUD_CREDS=credentials('gcloud-creds')
-    // }
+    environment {
+        // CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
+        // CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
+        // GCLOUD_CREDS=credentials('gcloud-creds')
+        FIREBASE_CREDS=credentials('witoonangular')
+    }
 
     stages {
 
@@ -38,9 +39,9 @@ pipeline {
             steps {
                 script {
                     sh 'npm install -g firebase-tools'
-                    sh 'firebase login:ci --interactive'
+                    // sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
-                    sh 'firebase deploy --token'
+                    sh "firebase deploy --token ${FIREBASE_CREDS}"
                 }
             }
 
