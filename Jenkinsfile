@@ -5,7 +5,7 @@ pipeline {
         // CLOUDSDK_CORE_PROJECT='valid-unfolding-398711'
         // CLIENT_EMAIL='jenkins-gcloud@valid-unfolding-398711.iam.gserviceaccount.com'
         // GCLOUD_CREDS=credentials('gcloud-creds')
-        FIREBASE_CREDS=FileCredentials('witoonangular')
+        // FIREBASE_CREDS=FileCredentials('witoonangular')
     }
 
     stages {
@@ -41,7 +41,10 @@ pipeline {
                     sh 'npm install -g firebase-tools'
                     // sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
-                    sh "firebase deploy --token ${FIREBASE_CREDS}"
+                    withCredentials([file(credentialsId: 'witoonangualar', variable: 'FIREBASE_CREDS')]) {
+                        sh 'firebase deploy --token $FIREBASE_CREDS'
+                    }
+                    
                 }
             }
 
