@@ -28,28 +28,28 @@ pipeline {
 
         }
 
-        stage('Initialize firebase') {
-            agent {
-                 docker {
-                        image "node"
-                        args '-u root'
-                }
-            }
+        // stage('Initialize firebase') {
+        //     agent {
+        //          docker {
+        //                 image "node"
+        //                 args '-u root'
+        //         }
+        //     }
             
-            steps {
-                script {
-                    sh 'npm install -g firebase-tools'
-                    // sh 'firebase login:ci --interactive'
-                    // sh 'firebase init hosting'
-                    // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
-                    //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
-                    //     sh 'firebase deploy'
-                    // }
+        //     steps {
+        //         script {
+        //             sh 'npm install -g firebase-tools'
+        //             // sh 'firebase login:ci --interactive'
+        //             // sh 'firebase init hosting'
+        //             // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+        //             //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+        //             //     sh 'firebase deploy'
+        //             // }
                     
-                }
-            }
+        //         }
+        //     }
 
-        }
+        // }
 
         stage('Auth and Deploy') {
             agent {
@@ -68,11 +68,35 @@ pipeline {
                         // }
                         sh 'gcloud --version'
                         sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        sh 'gcloud config set project witoonangular'
                         
-                        sh 'firebase deploy'
+                        // sh 'firebase deploy'
                     }
                 }
             }
+        }
+
+          stage('Initialize firebase') {
+            agent {
+                 docker {
+                        image "node"
+                        args '-u root'
+                }
+            }
+            
+            steps {
+                script {
+                    sh 'npm install -g firebase-tools'
+                    // sh 'firebase login:ci --interactive'
+                    // sh 'firebase init hosting'
+                    // withCredentials([file(credentialsId: 'angularCreds', variable: 'FIREBASE_CREDS')]) {
+                    //     sh 'gcloud auth login --cred-file=$FIREBASE_CREDS'
+                        sh 'firebase deploy'
+                    // }
+                    
+                }
+            }
+
         }
 
         // stage('Log') {
