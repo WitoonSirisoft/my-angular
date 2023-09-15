@@ -41,7 +41,7 @@ pipeline {
                     sh 'npm install -g firebase-tools'
                     // sh 'firebase login:ci --interactive'
                     // sh 'firebase init hosting'
-                    withCredentials([file(credentialsId: 'witoonangualar', variable: 'FIREBASE_CREDS')]) {
+                    withCredentials([file(credentialsId: 'witoonangular', variable: 'FIREBASE_CREDS')]) {
                         sh 'firebase deploy --token $FIREBASE_CREDS'
                     }
                     
